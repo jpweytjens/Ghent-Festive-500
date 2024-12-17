@@ -1,10 +1,14 @@
 # Ghent Festive 500
 
-<img src="https://images.squarespace-cdn.com/content/v1/6530437398bac152289a44ce/9c34113d-8603-4935-bb9e-7c6914045687/ghent_festive_500_white.png?format=1500w" alt="Ghent Festive 500 Logo" width="400"/>
+<div style="display: flex; align-items: center; justify-content: space-between;">
+    <div style="flex: 2;">
+        The Rapha Festive 500 is a year-end cycling challenge where participants aim to cycle a minimum of 500 km between Christmas Eve and New Year's Eve. For the third year running, 8 Ghent cycling clubs are collaborating to help cyclists achieve this goal.
+    </div>
+    <div style="flex: 1; text-align: right;">
+        <img src="https://images.squarespace-cdn.com/content/v1/6530437398bac152289a44ce/9c34113d-8603-4935-bb9e-7c6914045687/ghent_festive_500_white.png?format=1500w" alt="Ghent Festive 500 Logo" width="150"/>
+    </div>
+</div>
 
-## About the Event
-
-The Rapha Festive 500 is a year-end cycling challenge where participants aim to cycle a minimum of 500 km between Christmas Eve and New Year's Eve. For the third year running, 8 Ghent cycling clubs are collaborating to help cyclists achieve this goal.
 
 ### Event Details
 - Daily social rides from December 24-31
@@ -15,11 +19,11 @@ The Rapha Festive 500 is a year-end cycling challenge where participants aim to 
 - Three platoons with varying speeds to accommodate all riders
 
 ### Supporting Sportaround
-Each year, the Ghent Festive 500 supports a charity. This year's beneficiary is Sportaround, an organization making sports accessible to everyone. Participants can purchase stamp cards for a voluntary contribution, with 100% of proceeds going to Sportaround.
+Each year, the [Ghent Festive 500](https://www.ghentfestive500.be/) supports a charity. This year's beneficiary is Sportaround, an organization making sports accessible to everyone. Participants can purchase stamp cards for a voluntary contribution, with 100% of proceeds going to Sportaround.
 
 ## Repository Contents
 
-This repository contains the code for tracking and displaying donations made to Sportaround during the Ghent Festive 500 event.
+This repository contains the code for tracking and displaying donations made to Sportaround during the [Ghent Festive 500](https://www.ghentfestive500.be/) event.
 
 ### File Structure
 ```
