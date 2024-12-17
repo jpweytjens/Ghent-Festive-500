@@ -28,10 +28,10 @@ const allowCors = fn => async (req, res) => {
 
 const handler = async (req, res) => {
     try {
-
         let total = 0;
 
         // Use autopagination but filter for paid status in the loop
+        // https://docs.stripe.com/api/pagination/auto?lang=node
         for await (const session of stripe.checkout.sessions.list({
             payment_link: process.env.STRIPE_PAYMENT_LINK_ID,
             status: 'complete',
@@ -42,12 +42,11 @@ const handler = async (req, res) => {
             }
         }
 
-
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json({
             success: true,
             total: (total / 100).toFixed(2),
-            currency: 'EUR'
+            currency: 'EUR',
         });
 
     } catch (error) {
