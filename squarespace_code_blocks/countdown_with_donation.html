@@ -1,0 +1,258 @@
+<div id="countdown">
+    <div id="countdown-timer">
+        <div class="time-unit">
+            <span class="number" id="days"></span>
+            <span class="label">dagen</span>
+        </div>
+        <div class="time-unit">
+            <span class="number" id="hours"></span>
+            <span class="label">uur</span>
+        </div>
+        <div class="time-unit">
+            <span class="number" id="minutes"></span>
+            <span class="label">minuten</span>
+        </div>
+        <div class="time-unit">
+            <span class="number" id="seconds"></span>
+            <span class="label">seconden</span>
+        </div>
+    </div>
+    <div id="countdown-message" class="hidden">tot de Ghent Festive 500 begint</div>
+</div>
+
+
+<style>
+    .content-hidden {
+        visibility: hidden;
+    }
+
+    .content-visible {
+        visibility: visible;
+        animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    #countdown {
+        text-align: center;
+        padding: 5px;
+        color: #D5DD1F;
+        font-family: "DIN Condensed", sans-serif;
+    }
+
+    #countdown-timer,
+    #countdown-message {
+        font-size: 2.5em;
+        padding: 0;
+    }
+
+    #countdown-timer .event-started {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+
+    #countdown-timer .event-started-title {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+
+    #countdown-timer .event-started-subtitle {
+        font-size: 0.8em;
+    }
+
+    #countdown-timer .donation-info {
+        font-size: 1.0em;
+        margin-top: 12px;
+    }
+
+    .amount-text {
+        color: #FFFFFF;
+    }
+
+    #countdown-message {
+        font-size: 2em;
+        margin-top: 25px;
+    }
+
+    .time-unit {
+        display: inline-flex;
+        align-items: baseline;
+        padding: 0 5px;
+    }
+
+    .label {
+        margin-left: 2px;
+    }
+
+    .number {
+        font-weight: bold;
+        color: #EFEFEF;
+    }
+
+    #countdown span {
+        padding: 0 3px;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    .calendar-link {
+        text-decoration: underline;
+        transition: opacity 0.2s;
+    }
+
+    .calendar-link:hover {
+        opacity: 0.8;
+    }
+
+    @media (max-width: 600px) {
+        #countdown-timer {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .time-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .number {
+            font-size: 2.5em;
+            line-height: 1;
+        }
+
+        .label {
+            font-size: 1em;
+            margin-top: 5px;
+        }
+
+        #countdown-timer .event-started {
+            padding: 0 15px;
+        }
+    }
+</style>
+
+<script>
+    const EVENT_DATE = new Date("December 24, 2024 09:30:00").getTime();
+    const COUNTDOWN_TIMER = document.getElementById("countdown-timer");
+    const COUNTDOWN_MESSAGE = document.getElementById("countdown-message");
+    const DONATION_TOTAL = document.getElementById("donation-total");
+
+    document.getElementById("countdown").classList.add("content-hidden");
+
+
+    async function updateCountdown() {
+        try {
+            const now = new Date().getTime();
+            const timeRemaining = EVENT_DATE - now;
+
+            if (timeRemaining <= 0) {
+                // Get donation data first
+                const donationResult = await displayDonationTotal();
+
+                // Prepare new content
+                COUNTDOWN_TIMER.innerHTML = `
+                <div class="event-started">
+                    <div class="event-started-title">De Ghent Festive 500 is bezig!</div>
+                    <div class="event-started-subtitle">
+                        Check de <a href="https://www.ghentfestive500.be/kalender" target="_blank" class="calendar-link">kalender</a> voor de opkomende ritten
+                    </div>
+                    <div class="donation-info">
+                        ${donationResult.unit}<span class="amount-text">${donationResult.amount}</span> ${donationResult.text}
+                    </div>
+                </div>`;
+
+                COUNTDOWN_MESSAGE.classList.add("hidden");
+
+                // Show the content
+                document.getElementById("countdown").classList.remove("content-hidden");
+                document.getElementById("countdown").classList.add("content-visible");
+
+                // Clear the interval
+                if (window.countdownInterval) {
+                    clearInterval(window.countdownInterval);
+                }
+                return;
+            }
+
+            // Calculate time units
+            const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+            // Update DOM elements
+            document.getElementById("days").innerHTML = days;
+            document.getElementById("hours").innerHTML = hours;
+            document.getElementById("minutes").innerHTML = minutes;
+            document.getElementById("seconds").innerHTML = seconds;
+
+            // Show countdown message
+            COUNTDOWN_MESSAGE.classList.remove("hidden");
+
+            // Show the content after everything is updated
+            document.getElementById("countdown").classList.remove("content-hidden");
+            document.getElementById("countdown").classList.add("content-visible");
+
+        } catch (error) {
+            console.error('Error updating countdown:', error);
+        }
+    }
+
+
+
+
+    async function displayDonationTotal() {
+        try {
+            const response = await fetch('https://ghent-festive-500-stripe-dq8xm76ss-johannes-projects-723ea92e.vercel.app/api/payment-total');
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            if (data.success) {
+                const total = parseFloat(data.total).toLocaleString('nl-BE', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                });
+
+                return {
+                    unit: '€',
+                    amount: `${total}`,
+                    text: 'ingezameld voor Sportaround'
+                };
+            }
+
+            throw new Error('Failed to fetch donation total');
+        } catch (error) {
+            return {
+                unit: '',
+                amount: 'Unable to load donation total',
+                text: ''
+            };
+        }
+    }
+
+    // Initialize countdown immediately
+    updateCountdown();
+
+    // Set up interval for updates
+    window.countdownInterval = setInterval(updateCountdown, 1000);
+
+
+</script>

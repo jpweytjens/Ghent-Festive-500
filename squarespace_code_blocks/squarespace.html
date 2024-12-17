@@ -1,0 +1,69 @@
+<!-- HTML -->
+<div id="donation-total">
+  <div class="valuta-unit">
+    <span id="donation-unit"></span>
+    <span id="donation-amount">Laden ...</span>
+    <span id="donation-text"></span>
+  </div>
+</div>
+
+<style>
+  #donation-total {
+    font-size: 2.5em;
+    margin: 20px 0;
+    font-family: "DIN Condensed", sans-serif;
+    color: #FFFFFF;
+  }
+
+  .donation-unit {
+    display: inline-flex;
+    align-items: baseline;
+    padding: 0 5px;
+  }
+
+  #donation-amount {
+    font-weight: bold;
+    color: #D5DD1F;
+  }
+</style>
+
+<script>
+  const displayDonationTotal = async () => {
+    try {
+      const response = await fetch('https://ghent-festive-500-stripe-dq8xm76ss-johannes-projects-723ea92e.vercel.app/api/payment-total');
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        const total = parseFloat(data.total).toLocaleString('nl-BE', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        });
+
+        return {
+          unit: '€',
+          amount: `${total}`,
+          text: 'ingezameld voor Sportaround'
+        };
+      }
+
+      throw new Error('Failed to fetch donation total');
+    } catch (error) {
+      return {
+        unit: '',
+        amount: 'Unable to load donation total',
+        text: ''
+      };
+    }
+  }
+
+  displayDonationTotal().then(result => {
+    document.getElementById('donation-unit').innerHTML = result.unit;
+    document.getElementById('donation-amount').innerHTML = result.amount;
+    document.getElementById('donation-text').innerHTML = result.text;
+  });
+</script>

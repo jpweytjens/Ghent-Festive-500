@@ -1,0 +1,122 @@
+<div id="countdown">
+    <div id="countdown-timer">
+        <div class="time-unit">
+            <span class="number" id="days"></span>
+            <span class="label">dagen</span>
+        </div>
+        <div class="time-unit">
+            <span class="number" id="hours"></span>
+            <span class="label">uur</span>
+        </div>
+        <div class="time-unit">
+            <span class="number" id="minutes"></span>
+            <span class="label">minuten</span>
+        </div>
+        <div class="time-unit">
+            <span class="number" id="seconds"></span>
+            <span class="label">seconden</span>
+        </div>
+    </div>
+    <div id="countdown-message" class="hidden">tot de Ghent Festive 500 begint</div>
+</div>
+
+
+<style>
+    #countdown {
+        text-align: center;
+        padding: 5px;
+        color: #D5DD1F;
+        font-family: "DIN Condensed", sans-serif;
+    }
+
+    #countdown-timer,
+    #countdown-message {
+        font-size: 2.5em;
+        padding: 0;
+    }
+
+    #countdown-message {
+        font-size: 2em;
+        margin-top: 25px;
+    }
+
+    .time-unit {
+        display: inline-flex;
+        align-items: baseline;
+        padding: 0 5px;
+    }
+
+    .label {
+        margin-left: 2px;
+    }
+
+    .number {
+        font-weight: bold;
+        color: #EFEFEF;
+    }
+
+    #countdown span {
+        padding: 0 3px;
+    }
+
+    .hidden {
+        visibility: hidden;
+    }
+
+    /* Mobile-specific styling */
+    @media (max-width: 600px) {
+        #countdown-timer {
+            display: grid;
+            grid-template-columns: 1fr;
+            /* Single column layout */
+            gap: 10px;
+        }
+
+        .time-unit {
+            display: flex;
+            flex-direction: column;
+            /* Stack number above label */
+            align-items: center;
+        }
+
+        .number {
+            font-size: 2.5em;
+            line-height: 1;
+            /* Reduce line height for tighter spacing */
+        }
+
+        .label {
+            font-size: 1em;
+            margin-top: 5px;
+        }
+    }
+</style>
+
+<script>
+    function updateCountdown() {
+        const eventDate = new Date("December 24, 2024 09:30:00").getTime();
+        const now = new Date().getTime();
+        const timeRemaining = eventDate - now;
+
+        if (timeRemaining <= 0) {
+            document.getElementById("countdown-timer").innerHTML =
+                `De Ghent Festive 500 is bezig!<br>Check de <a href="https://www.ghentfestive500.be/kalender" target="_blank" style="color: #D5DD1F; text-decoration: underline;">kalender</a> voor de opkomende ritten`;
+            document.getElementById("countdown-message").classList.add("hidden"); // Hide the message if the event has started
+            return;
+        } else {
+            document.getElementById("countdown-message").classList.remove("hidden"); // Show the message if countdown is active
+        }
+
+        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerHTML = days;
+        document.getElementById("hours").innerHTML = hours;
+        document.getElementById("minutes").innerHTML = minutes;
+        document.getElementById("seconds").innerHTML = seconds;
+    }
+
+    setInterval(updateCountdown, 1000);
+</script>
