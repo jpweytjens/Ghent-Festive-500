@@ -1,15 +1,9 @@
 # Ghent Festive 500
 
-<div style="display: flex; align-items: center; justify-content: space-between;">
-    <div style="flex: 2;">
-        The Rapha Festive 500 is a year-end cycling challenge where participants aim to cycle a minimum of 500 km between Christmas Eve and New Year's Eve. For the third year running, 8 Ghent cycling clubs are collaborating to help cyclists achieve this goal.
-    </div>
-    <div style="flex: 1; text-align: right;">
-        <img src="https://images.squarespace-cdn.com/content/v1/6530437398bac152289a44ce/9c34113d-8603-4935-bb9e-7c6914045687/ghent_festive_500_white.png?format=1500w" alt="Ghent Festive 500 Logo" width="150"/>
-    </div>
-</div>
+<img align="left" width="100" hspace="20" src="https://images.squarespace-cdn.com/content/v1/6530437398bac152289a44ce/9c34113d-8603-4935-bb9e-7c6914045687/ghent_festive_500_white.png?format=1500w">
 
-
+The Rapha Festive 500 is a year-end cycling challenge where participants aim to cycle a minimum of 500 km between Christmas Eve and New Year's Eve. For the third year running, 8 Ghent cycling clubs are collaborating to help cyclists achieve this goal.
+    
 ### Event Details
 - Daily social rides from December 24-31
 - Start time: 9:30 AM
