@@ -10,7 +10,7 @@ The Rapha Festive 500 is a year-end cycling challenge where participants aim to 
 - Two route options: 75km and 100km
 - Accompanied by road captains
 - No-drop policy ensuring comfortable group riding
-- Three platoons with varying speeds to accommodate all riders
+- Three pelotons with varying speeds to accommodate all riders
 
 ### Supporting Sportaround
 Each year, the [Ghent Festive 500](https://www.ghentfestive500.be/) supports a charity. This year's beneficiary is Sportaround, an organization making sports accessible to everyone. Participants can purchase stamp cards for a voluntary contribution, with 100% of proceeds going to Sportaround.
