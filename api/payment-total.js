@@ -34,7 +34,8 @@ const handler = async (req, res) => {
         // Use autopagination but filter for paid status in the loop
         for await (const session of stripe.checkout.sessions.list({
             payment_link: process.env.STRIPE_PAYMENT_LINK_ID,
-            status: 'complete'
+            status: 'complete',
+            limit: 100,
         })) {
             if (session.payment_status === 'paid') {
                 total += session.amount_total;
